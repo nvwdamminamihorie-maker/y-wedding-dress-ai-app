@@ -1,0 +1,8 @@
+
+{
+  "name": "Wedding Dress AI Stylist",
+  "description": "AI-powered wedding dress recommendation app that analyzes your photo to find the perfect dress style based on your face shape, skin tone, and atmosphere.",
+  "requestFramePermissions": [
+    "camera"
+  ]
+}
