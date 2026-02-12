@@ -53,6 +53,7 @@ const App: React.FC = () => {
   const karteRef = useRef<HTMLDivElement>(null);
   
   const chatContainerRef = useRef<HTMLDivElement>(null);
+  const chatTextareaRef = useRef<HTMLTextAreaElement>(null); // New ref for textarea
 
   useEffect(() => {
     if (chatContainerRef.current) {
@@ -104,6 +105,13 @@ const App: React.FC = () => {
     if (e.target) e.target.value = '';
   };
 
+  const adjustTextareaHeight = () => {
+    if (chatTextareaRef.current) {
+      chatTextareaRef.current.style.height = 'auto'; // Reset height to recalculate scrollHeight
+      chatTextareaRef.current.style.height = `${chatTextareaRef.current.scrollHeight}px`;
+    }
+  };
+
   const handleSendMessage = async () => {
     if ((!chatInput.trim() && !state.chatAttachedImage) || chatLoading) return;
     
@@ -115,10 +123,16 @@ const App: React.FC = () => {
     setChatInput("");
     setChatLoading(true);
     
+    // Reset textarea height after sending
+    if (chatTextareaRef.current) {
+      chatTextareaRef.current.style.height = 'auto';
+    }
+
     try {
       const reply = await chatWithConcierge(state.chatHistory, currentInput || (currentImage ? "このお写真について教えてください" : ""), currentImage);
       setState(prev => ({ ...prev, chatHistory: [...prev.chatHistory, { role: 'model', text: reply }] }));
     } catch (err) {
+      console.error(err);
       let errorText = "すみません、少し接続が不安定なようです。";
       if ((err as any)?.message?.includes('quota')) {
         errorText = "リクエスト上限に達しました。少し時間を置いてから再度お試しください。";
@@ -402,7 +416,6 @@ const App: React.FC = () => {
                {/* スタイリング詳細 */}
                <div className="space-y-3 mb-6">
                  <DetailSection icon="💇🏻‍♀️" title="Hairstyle" desc={state.result.stylingDetails.hairstyle} />
-                 {/* Removed duplicate 'title' attribute */}
                  <DetailSection icon="✨" title="Accessories" desc={state.result.stylingDetails.accessories} />
                  <DetailSection icon="💐" title="Bouquet" desc={state.result.stylingDetails.bouquet} />
                </div>
@@ -472,13 +485,16 @@ const App: React.FC = () => {
               )}
               <div className="flex gap-2">
                 <button onClick={() => chatImageRef.current?.click()} className="w-12 h-12 rounded-full bg-[#fffaf9] border border-[#f5ecea] flex items-center justify-center text-xl">📸</button>
-                <input 
-                  type="text" 
+                <textarea 
+                  ref={chatTextareaRef}
                   value={chatInput} 
-                  onChange={(e) => setChatInput(e.target.value)} 
+                  onChange={(e) => {
+                    setChatInput(e.target.value);
+                    adjustTextareaHeight();
+                  }}
+                  rows={1}
                   placeholder="気になることをお尋ねください" 
-                  className="w-[calc(80%-89.6px)] flex-none bg-[#fffaf9] border border-[#f5ecea] rounded-full px-5 text-sm focus:outline-none focus:border-[#e2a8ac]"
-                  onKeyPress={(e) => e.key === 'Enter' && handleSendMessage()}
+                  className="flex-none w-[calc(70.4%-78.85px)] bg-[#fffaf9] border border-[#f5ecea] rounded-2xl px-5 py-3 text-sm focus:outline-none focus:border-[#e2a8ac] resize-none overflow-hidden"
                 />
                 <button onClick={handleSendMessage} disabled={chatLoading} className="w-12 h-12 rounded-full bg-[#5a4a42] text-white flex items-center justify-center shadow-md active:scale-95">🕊️</button>
               </div>
