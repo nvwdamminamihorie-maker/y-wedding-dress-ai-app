@@ -498,7 +498,7 @@ const App: React.FC = () => {
                   }}
                   rows={1}
                   placeholder="気になることをお尋ねください" 
-                  className="flex-none w-[calc(70.4%-78.85px)] bg-[#fffaf9] border border-[#f5ecea] rounded-2xl px-5 py-3 text-base focus:outline-none focus:border-[#e2a8ac] resize-none overflow-hidden"
+                  className="flex-none w-[calc(84.48%-78.85px)] md:w-[calc(70.4%-78.85px)] bg-[#fffaf9] border border-[#f5ecea] rounded-2xl px-5 py-3 text-base focus:outline-none focus:border-[#e2a8ac] resize-none overflow-hidden"
                 />
                 <button onClick={handleSendMessage} disabled={chatLoading} className="w-12 h-12 rounded-full bg-[#5a4a42] text-white flex items-center justify-center shadow-md active:scale-95">🕊️</button>
               </div>
