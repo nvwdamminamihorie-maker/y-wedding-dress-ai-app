@@ -284,6 +284,10 @@ const App: React.FC = () => {
               </div>
             </div>
             <input type="file" multiple hidden ref={catalogInputRef} onChange={handleCatalogImport} />
+            {/* データプライバシーに関する注釈 */}
+            <div className="text-center text-[9px] text-[#8e7f78] leading-relaxed mt-4 mb-4">
+              <p>※画像はサーバーに保存されません。</p>
+            </div>
             <div className="fixed bottom-8 left-4 right-4 z-10">
               <button 
                 disabled={state.catalogItems.filter(i => i.category === state.mode).length === 0} 
@@ -497,6 +501,10 @@ const App: React.FC = () => {
                   className="flex-none w-[calc(70.4%-78.85px)] bg-[#fffaf9] border border-[#f5ecea] rounded-2xl px-5 py-3 text-base focus:outline-none focus:border-[#e2a8ac] resize-none overflow-hidden"
                 />
                 <button onClick={handleSendMessage} disabled={chatLoading} className="w-12 h-12 rounded-full bg-[#5a4a42] text-white flex items-center justify-center shadow-md active:scale-95">🕊️</button>
+              </div>
+              {/* データプライバシーに関する注釈 (チャット用) */}
+              <div className="text-center text-[9px] text-[#8e7f78] leading-relaxed mt-3">
+                <p>※ご入力内容はサーバーに保存されません。</p>
               </div>
               <input type="file" hidden ref={chatImageRef} onChange={(e) => handleFileChange(e, 'chat')} />
             </div>
