@@ -402,6 +402,7 @@ const App: React.FC = () => {
                {/* スタイリング詳細 */}
                <div className="space-y-3 mb-6">
                  <DetailSection icon="💇🏻‍♀️" title="Hairstyle" desc={state.result.stylingDetails.hairstyle} />
+                 {/* Removed duplicate 'title' attribute */}
                  <DetailSection icon="✨" title="Accessories" desc={state.result.stylingDetails.accessories} />
                  <DetailSection icon="💐" title="Bouquet" desc={state.result.stylingDetails.bouquet} />
                </div>
@@ -476,7 +477,7 @@ const App: React.FC = () => {
                   value={chatInput} 
                   onChange={(e) => setChatInput(e.target.value)} 
                   placeholder="気になることをお尋ねください" 
-                  className="flex-1 bg-[#fffaf9] border border-[#f5ecea] rounded-full px-5 text-sm focus:outline-none focus:border-[#e2a8ac]"
+                  className="w-[calc(80%-89.6px)] flex-none bg-[#fffaf9] border border-[#f5ecea] rounded-full px-5 text-sm focus:outline-none focus:border-[#e2a8ac]"
                   onKeyPress={(e) => e.key === 'Enter' && handleSendMessage()}
                 />
                 <button onClick={handleSendMessage} disabled={chatLoading} className="w-12 h-12 rounded-full bg-[#5a4a42] text-white flex items-center justify-center shadow-md active:scale-95">🕊️</button>
